@@ -13,6 +13,7 @@
 #import "DJObjectProperty.h"
 #import "DJObjectIvar.h"
 #import "DJObjectMethod.h"
+#import "DJObjectProtocol.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -34,6 +35,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSArray<DJObjectMethod *> *)inheritedClassMethodListWithClass:(Class)cls;
 + (NSArray<DJObjectMethod *> *)allClassMethodListWithClass:(Class)cls;
 
++ (NSArray<DJObjectProtocol *> *)protocolListWithClass:(Class)cls;
+
 + (NSArray<NSString *> *)superClassListWithClass:(Class)cls;
 + (NSArray<NSString *> *)allSuperClassListWithClass:(Class)cls;
 
@@ -48,6 +51,8 @@ NS_ASSUME_NONNULL_BEGIN
  @return The encoding type.
  */
 + (DJEncodingType)encodingTypeWith:(const char *)typeEncoding;
+
++ (NSDictionary *)dyldInfoWithClass:(Class)cls;
 
 @end
 

@@ -92,15 +92,20 @@
     _propertys = [DJObjectManager propertyListWithClass:cls];
     _ivars = [DJObjectManager ivarListWithClass:cls];
     
+    NSLog(@"ClasName: %@", _className);
     if (_isMeta)
-    {
-        _methods = [DJObjectManager methodListWithClass:cls];
-    }
-    else
     {
         _methods = [DJObjectManager classMethodListWithClass:cls];
     }
-        
+    else
+    {
+        _methods = [DJObjectManager methodListWithClass:cls];
+    }
+    
+    _protocols = [DJObjectManager protocolListWithClass:cls];
+    
+    //NSDictionary *dic = [DJObjectManager dyldInfoWithClass:cls];
+    
     _needUpdate = NO;
 }
 

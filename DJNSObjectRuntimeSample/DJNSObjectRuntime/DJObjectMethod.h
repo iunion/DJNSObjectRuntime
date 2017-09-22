@@ -19,6 +19,8 @@
 @property (nullable, nonatomic, strong, readonly) NSString *returnTypeEncoding;   ///< return value's type
 @property (nullable, nonatomic, strong, readonly) NSArray<NSString *> *argumentTypeEncodings; ///< array of arguments' type
 
+@property (nullable, nonatomic, strong, readonly) NSString *categoryName;         ///< return category name
+
 - (nullable instancetype)initWithMethod:(nullable Method)method;
 
 @end

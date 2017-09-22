@@ -7,6 +7,7 @@
 //
 
 #import "DJObjectMethod.h"
+#include "dlfcn.h"
 
 @implementation DJObjectMethod
 
@@ -26,6 +27,15 @@
     return self;
 }
 
+- (void)setMethod:(Method)amethod
+{
+    if (_method != amethod)
+    {
+        _method = amethod;
+        [self freshMethod];
+    }
+}
+
 - (void)freshMethod
 {
     _sel = method_getName(self.method);
@@ -36,6 +46,8 @@
     {
         _name = [NSString stringWithUTF8String:name];
     }
+    
+    NSLog(@"%@", _name);
     
     const char *typeEncoding = method_getTypeEncoding(self.method);
     if (typeEncoding)
@@ -66,16 +78,36 @@
         }
         _argumentTypeEncodings = argumentTypes;
     }
-}
-
-- (void)setMethod:(Method)amethod
-{
-    if (_method != amethod)
-    {
-        _method = amethod;
-        [self freshMethod];
+    
+    Dl_info info;
+    int rc = dladdr(_imp, &info);
+    
+    if (!rc)  {
+        return;
     }
-}
 
+//    printf("-- function %s\n", info.dli_sname);
+//    printf("-- program %s\n", info.dli_fname);
+//    printf("-- fbase %p\n", info.dli_fbase);
+//    printf("-- saddr %p\n", info.dli_saddr);
+    
+    //NSString *filePath = [NSString stringWithFormat:@"%s", info.dli_fname];
+    
+#if TARGET_OS_IPHONE && !TARGET_IPHONE_SIMULATOR
+    NSString *symbolName = @""; // info.dli_sname is unreliable on the device, most of time "<redacted>"
+#else
+    NSString *symbolName = [NSString stringWithFormat:@"%s", info.dli_sname];
+#endif
+    
+    NSString *categoryName = nil;
+    
+    NSUInteger startIndex = [symbolName rangeOfString:@"("].location;
+    NSUInteger stopIndex = [symbolName rangeOfString:@")"].location;
+    if(startIndex != NSNotFound && stopIndex != NSNotFound && startIndex < stopIndex) {
+        categoryName = [symbolName substringWithRange:NSMakeRange(startIndex+1, (stopIndex - startIndex)-1)];
+    }
+    
+    _categoryName = categoryName;
+}
 
 @end

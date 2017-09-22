@@ -10,6 +10,7 @@
 #import <CoreData/CoreData.h>
 #import "NSObject+Category.h"
 
+#include "dlfcn.h"
 
 //@interface DJObjectProtocol : NSObject
 //@property (nonatomic, assign) Protocol *protocol;
@@ -210,6 +211,24 @@
     return methodArray;
 }
 
++ (NSArray<DJObjectProtocol *> *)protocolListWithClass:(Class)cls
+{
+    NSMutableArray *protocolArray = [NSMutableArray array];
+    unsigned int protocolCount = 0;
+    
+    Protocol * __unsafe_unretained *protocols = class_copyProtocolList(cls, &protocolCount);
+    if (protocols)
+    {
+        for (unsigned int i = 0; i < protocolCount; i++)
+        {
+            DJObjectProtocol *objectProtocol = [[DJObjectProtocol alloc] initWithProtocol:protocols[i]];
+            [protocolArray addObject:objectProtocol];
+        }
+        free(protocols);
+    }
+    return protocolArray;
+}
+
 + (NSArray *)superClassListWithClass:(Class)cls
 {
     NSMutableArray *superClassArray = [NSMutableArray array];
@@ -338,6 +357,41 @@
         }
         default: return DJEncodingTypeUnknown | qualifier;
     }
+}
+
++ (NSDictionary *)dyldInfoWithClass:(Class)cls
+{
+    //Class aClass = NSClassFromString(classObjectName);
+    
+    Dl_info info;
+    int rc = dladdr((__bridge const void *)cls, &info);
+    
+    if (!rc)  {
+        return nil;
+    }
+    
+//    printf("-- function %s\n", info.dli_sname);
+//    printf("-- program %s\n", info.dli_fname);
+//    printf("-- fbase %p\n", info.dli_fbase);
+//    printf("-- saddr %p\n", info.dli_saddr);
+    
+    NSString *filePath = [NSString stringWithFormat:@"%s", info.dli_fname];
+    NSString *symbolName = [NSString stringWithFormat:@"%s", info.dli_sname];
+    
+    NSUInteger startIndex = [symbolName rangeOfString:@"("].location;
+    NSUInteger stopIndex = [symbolName rangeOfString:@")"].location;
+    
+    NSString *categoryName = nil;
+    
+    if(startIndex != NSNotFound && stopIndex != NSNotFound && startIndex < stopIndex) {
+        categoryName = [symbolName substringWithRange:NSMakeRange(startIndex+1, (stopIndex - startIndex)-1)];
+    }
+    
+    NSMutableDictionary *md = [NSMutableDictionary dictionaryWithCapacity:2];
+    if(filePath) md[@"filePath"] = filePath;
+    if(symbolName) md[@"symbolName"] = symbolName;
+    if(categoryName) md[@"categoryName"] = categoryName;
+    return md;
 }
 
 @end

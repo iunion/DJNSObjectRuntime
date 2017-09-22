@@ -7,6 +7,14 @@
 //
 
 #import "ViewController.h"
+#import "NSObject+DJRuntime.h"
+#import "NSObject+Category.h"
+
+#import "DJClassInfor.h"
+
+#import "AAA.h"
+#import "BBB.h"
+
 
 @interface ViewController ()
 
@@ -22,9 +30,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    
-    
-    
+    //DJClassInfor *viewClassInfor = [DJClassInfor classInfoWithClass:[UIView class]];
+    //Class metaClass = objc_getMetaClass(class_getName([UIView class]));
+    //DJClassInfor *viewClassInfor1 = [DJClassInfor classInfoWithClass:metaClass];
+
+    BBB *bb = [[BBB alloc] init];
+    DJClassInfor *viewClassInfor2 = [DJClassInfor classInfoWithClass:[bb class]];
+
 }
 
 - (void)didReceiveMemoryWarning {
