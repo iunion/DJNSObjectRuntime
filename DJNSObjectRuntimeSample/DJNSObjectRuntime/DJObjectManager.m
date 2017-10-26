@@ -12,11 +12,6 @@
 
 #include "dlfcn.h"
 
-//@interface DJObjectProtocol : NSObject
-//@property (nonatomic, assign) Protocol *protocol;
-//@end
-
-
 @implementation DJObjectManager
 
 // 用户添加
@@ -26,15 +21,19 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         DJFoundationClasses = [NSSet setWithObjects:
-                              [NSURL class],
-                              [NSDate class],
-                              [NSValue class],
-                              [NSData class],
-                              [NSError class],
-                              [NSArray class],
-                              [NSDictionary class],
-                              [NSString class],
-                              [NSAttributedString class], nil];
+                               [NSBundle class],
+                               [NSCalendar class],
+                               [NSCharacterSet class],
+                               [NSURL class],
+                               [NSDate class],
+                               [NSValue class],
+                               [NSData class],
+                               [NSError class],
+                               [NSSet class],
+                               [NSArray class],
+                               [NSDictionary class],
+                               [NSString class],
+                               [NSAttributedString class], nil];
     });
     
     return DJFoundationClasses;
@@ -359,14 +358,19 @@
     }
 }
 
++ (NSDictionary *)dyldInfoWithClassName:(NSString *)className
+{
+    Class aClass = NSClassFromString(className);
+    
+    return [DJObjectManager dyldInfoWithClass:aClass];
+}
+
 + (NSDictionary *)dyldInfoWithClass:(Class)cls
 {
-    //Class aClass = NSClassFromString(classObjectName);
-    
     Dl_info info;
     int rc = dladdr((__bridge const void *)cls, &info);
-    
-    if (!rc)  {
+    if (!rc)
+    {
         return nil;
     }
     
@@ -383,14 +387,24 @@
     
     NSString *categoryName = nil;
     
-    if(startIndex != NSNotFound && stopIndex != NSNotFound && startIndex < stopIndex) {
+    if (startIndex != NSNotFound && stopIndex != NSNotFound && startIndex < stopIndex)
+    {
         categoryName = [symbolName substringWithRange:NSMakeRange(startIndex+1, (stopIndex - startIndex)-1)];
     }
     
     NSMutableDictionary *md = [NSMutableDictionary dictionaryWithCapacity:2];
-    if(filePath) md[@"filePath"] = filePath;
-    if(symbolName) md[@"symbolName"] = symbolName;
-    if(categoryName) md[@"categoryName"] = categoryName;
+    if (filePath)
+    {
+        md[@"filePath"] = filePath;
+    }
+    if (symbolName)
+    {
+        md[@"symbolName"] = symbolName;
+    }
+    if (categoryName)
+    {
+        md[@"categoryName"] = categoryName;
+    }
     return md;
 }
 

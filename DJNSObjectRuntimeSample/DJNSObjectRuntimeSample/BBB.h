@@ -9,13 +9,19 @@
 #import <Foundation/Foundation.h>
 #import "AAA.h"
 
+typedef void (^blockHandler)(NSString *item);
+
 @interface BBB : AAA
+
+@property (nonatomic, retain) NSString *name;
+@property (nonatomic, retain) NSArray *nameArray;
+@property (nonatomic, copy) blockHandler block;
+
++ (NSString *)classMethod;
 
 @end
 
 @interface BBB (CCCC)
-
-@property (retain) NSString *name;
 
 - (NSString *)addString;
 

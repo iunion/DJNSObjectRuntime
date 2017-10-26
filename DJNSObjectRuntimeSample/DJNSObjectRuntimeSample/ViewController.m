@@ -35,7 +35,9 @@
     //DJClassInfor *viewClassInfor1 = [DJClassInfor classInfoWithClass:metaClass];
 
     BBB *bb = [[BBB alloc] init];
-    DJClassInfor *viewClassInfor2 = [DJClassInfor classInfoWithClass:[bb class]];
+    DJClassInfor *viewClassInfor2 = [DJClassInfor classInfoWithClass:[BBB class]];
+    
+    BOOL cc = [DJObjectManager isClassFromFoundation:[AAA class]];
 
 }
 

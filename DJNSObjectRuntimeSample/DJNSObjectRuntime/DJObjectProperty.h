@@ -33,6 +33,7 @@ extern const char kNSObjectRuntimeAttributeOldStyleTypeEncoding;
 @property (nonnull, nonatomic, strong, readonly) NSString *ivarName;        ///< property's ivar name
 @property (nullable, nonatomic, assign, readonly) Class cls;                ///< may be nil
 @property (nullable, nonatomic, strong, readonly) NSArray<NSString *> *protocols; ///< may nil
+@property (nonatomic, assign, readonly) BOOL isReadonly;                    ///< readonly
 @property (nonnull, nonatomic, assign, readonly) SEL getter;                ///< getter (nonnull)
 @property (nonnull, nonatomic, assign, readonly) SEL setter;                ///< setter (nonnull)
 @property (nonnull, nonatomic, strong, readonly) NSString *getterName;      ///< getterName (nonnull)

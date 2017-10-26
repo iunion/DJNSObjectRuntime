@@ -26,6 +26,13 @@ const char kNSObjectRuntimeAttributeGarbageCollectable = 'P';
 const char kNSObjectRuntimeAttributeOldStyleTypeEncoding = 't';
 
 
+@interface DJObjectProperty ()
+
+@property (nonatomic, strong) NSMutableDictionary *descriptionDic;
+
+@end
+
+
 @implementation DJObjectProperty
 
 - (instancetype)initWithProperty:(objc_property_t)property
@@ -39,7 +46,7 @@ const char kNSObjectRuntimeAttributeOldStyleTypeEncoding = 't';
     
     if (self)
     {
-        _property = property;
+         _property = property;
         [self freshProperty];
     }
     
@@ -50,6 +57,7 @@ const char kNSObjectRuntimeAttributeOldStyleTypeEncoding = 't';
 {
     if (_property != aproperty)
     {
+        _descriptionDic = [[NSMutableDictionary alloc] init];
         _property = aproperty;
         [self freshProperty];
     }
@@ -62,18 +70,22 @@ const char kNSObjectRuntimeAttributeOldStyleTypeEncoding = 't';
     {
         //_name = @(name);
         _name = [NSString stringWithUTF8String:name];
+        NSLog(@"propertyName: %@", _name);
+       [self.descriptionDic setObject:_name forKey:@"Name"];
     }
     
     DJEncodingType type = DJEncodingTypeUnknown;
 
     NSLog(@"%@", @(property_getAttributes(self.property)));
-          
+    
+    NSMutableDictionary *attrsDic = [[NSMutableDictionary alloc] init];
+
     unsigned int attrCount;
     objc_property_attribute_t *attrs = property_copyAttributeList(self.property, &attrCount);
     for (unsigned int i = 0; i < attrCount; i++)
     {
         //NSLog(@"%@, %@", @(attrs[i].name), @(attrs[i].value));
-        
+
         char attributeChar = attrs[i].name[0];
         switch (attributeChar)
         {
@@ -97,6 +109,7 @@ const char kNSObjectRuntimeAttributeOldStyleTypeEncoding = 't';
                             {
                                 _cls = objc_getClass(clsName.UTF8String);
                                 _objectClassName = clsName;
+                                [attrsDic setObject:_objectClassName forKey:@"ClassName"];
                             }
                         }
                         
@@ -118,14 +131,26 @@ const char kNSObjectRuntimeAttributeOldStyleTypeEncoding = 't';
                             [scanner scanString:@">" intoString:NULL];
                         }
                         _protocols = protocols;
+                        if (_protocols)
+                        {
+                            [attrsDic setObject:_protocols forKey:@"protocols"];
+                        }
                     }
                     else if ((type & DJEncodingTypeMask) == DJEncodingTypeStruct && _typeEncoding.length)
                     {
                         _structureName = [_typeEncoding subStringFromChar:'{' toChar:'='];
+                        if (_structureName.length)
+                        {
+                            [attrsDic setObject:_structureName forKey:@"structureName"];
+                        }
                     }
                     else if ((type & DJEncodingTypeMask) == DJEncodingTypeUnion && _typeEncoding.length)
                     {
                         _unionName = [_typeEncoding subStringFromChar:'(' toChar:'='];
+                        if (_unionName.length)
+                        {
+                            [attrsDic setObject:_unionName forKey:@"unionName"];
+                        }
                     }
                 }
             }
@@ -137,43 +162,51 @@ const char kNSObjectRuntimeAttributeOldStyleTypeEncoding = 't';
                 if (attrs[i].value)
                 {
                     _ivarName = [NSString stringWithUTF8String:attrs[i].value];
+                    [attrsDic setObject:_ivarName forKey:@"ivarName"];
                 }
             }
                 break;
                 
             case kNSObjectRuntimeAttributeReadOnly:
             {
+                _isReadonly = YES;
                 type |= DJEncodingTypePropertyReadonly;
+                [attrsDic setObject:@"Y" forKey:@"ReadOnly"];
             }
                 break;
                 
             case kNSObjectRuntimeAttributeCopy:
             {
                 type |= DJEncodingTypePropertyCopy;
+                [attrsDic setObject:@"Copy" forKey:@"Attribute"];
             }
                 break;
                 
             case kNSObjectRuntimeAttributeRetain:
             {
                 type |= DJEncodingTypePropertyRetain;
+                [attrsDic setObject:@"Retain" forKey:@"Attribute"];
             }
                 break;
                 
             case kNSObjectRuntimeAttributeNonAtomic:
             {
                 type |= DJEncodingTypePropertyNonatomic;
+                [attrsDic setObject:@"Y" forKey:@"Nonatomic"];
             }
                 break;
                 
             case kNSObjectRuntimeAttributeDynamic:
             {
                 type |= DJEncodingTypePropertyDynamic;
+                [attrsDic setObject:@"Y" forKey:@"Dynamic"];
             }
                 break;
                 
             case kNSObjectRuntimeAttributeWeak:
             {
                 type |= DJEncodingTypePropertyWeak;
+                [attrsDic setObject:@"Weak" forKey:@"Attribute"];
             }
                 break;
                 
@@ -183,7 +216,10 @@ const char kNSObjectRuntimeAttributeOldStyleTypeEncoding = 't';
                 if (attrs[i].value)
                 {
                     _getterName = [NSString stringWithUTF8String:attrs[i].value];
-                    _getter = NSSelectorFromString(_getterName);
+                    if (_getterName)
+                    {
+                        _getter = NSSelectorFromString(_getterName);
+                    }
                 }
             }
                 break;
@@ -194,8 +230,11 @@ const char kNSObjectRuntimeAttributeOldStyleTypeEncoding = 't';
                 if (attrs[i].value)
                 {
                     _setterName = [NSString stringWithUTF8String:attrs[i].value];
-                    _setter = NSSelectorFromString(_setterName);
-                }
+                    if (_setterName)
+                    {
+                        _setter = NSSelectorFromString(_setterName);
+                    }
+               }
             }
                 break;
                 
@@ -217,6 +256,7 @@ const char kNSObjectRuntimeAttributeOldStyleTypeEncoding = 't';
         {
             _getterName = _name;
             _getter = NSSelectorFromString(_name);
+            [attrsDic setObject:_getterName forKey:@"GetterName"];
         }
         if (!_setter)
         {
@@ -224,15 +264,28 @@ const char kNSObjectRuntimeAttributeOldStyleTypeEncoding = 't';
             {
                 _setterName = [NSString stringWithFormat:@"set%@%@:", [_name substringToIndex:1].uppercaseString, [_name substringFromIndex:1]];
                 _setter = NSSelectorFromString(_setterName);
+                [attrsDic setObject:_setterName forKey:@"SetterName"];
             }
             else
             {
                 _setterName = [NSString stringWithFormat:@"set%@:", [_name substringToIndex:1].uppercaseString];
                 _setter = NSSelectorFromString(_setterName);
+                [attrsDic setObject:_setterName forKey:@"SetterName"];
             }
         }
     }
+    
+    [self.descriptionDic setObject:attrsDic forKey:@"Attributes"];
 }
 
+- (NSString *)description
+{
+    return [self.descriptionDic description];
+}
+
+- (NSString *)debugDescription
+{
+    return [self.descriptionDic debugDescription];
+}
 
 @end

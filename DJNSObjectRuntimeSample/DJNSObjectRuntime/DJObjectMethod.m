@@ -8,6 +8,17 @@
 
 #import "DJObjectMethod.h"
 #include "dlfcn.h"
+#import "NSString+Category.h"
+
+// Arguments 0 and 1 are self and _cmd always
+const unsigned int kDJNumberOfImplicitArgs = 2;
+
+@interface DJObjectMethod ()
+
+@property (nonatomic, strong) NSDictionary *cachedDyldInfoDictionary;
+@property (nonatomic, strong) NSMutableDictionary *descriptionDic;
+
+@end
 
 @implementation DJObjectMethod
 
@@ -31,6 +42,7 @@
 {
     if (_method != amethod)
     {
+        _descriptionDic = [[NSMutableDictionary alloc] init];
         _method = amethod;
         [self freshMethod];
     }
@@ -48,6 +60,7 @@
     }
     
     NSLog(@"%@", _name);
+    [self.descriptionDic setObject:_name forKey:@"Name"];
     
     const char *typeEncoding = method_getTypeEncoding(self.method);
     if (typeEncoding)
@@ -66,7 +79,7 @@
     if (argumentCount > 0)
     {
         NSMutableArray *argumentTypes = [NSMutableArray array];
-        for (unsigned int i = 0; i < argumentCount; i++)
+        for (unsigned int i = kDJNumberOfImplicitArgs; i < argumentCount; i++)
         {
             char *argumentType = method_copyArgumentType(self.method, i);
             NSString *type = argumentType ? [NSString stringWithUTF8String:argumentType] : nil;
@@ -78,20 +91,25 @@
         }
         _argumentTypeEncodings = argumentTypes;
     }
+}
+
+- (nonnull NSDictionary *)dyldInfo
+{
+    IMP imp = method_getImplementation(_method);
     
     Dl_info info;
-    int rc = dladdr(_imp, &info);
-    
-    if (!rc)  {
-        return;
+    int rc = dladdr(imp, &info);
+    if (!rc)
+    {
+        return nil;
     }
-
-//    printf("-- function %s\n", info.dli_sname);
-//    printf("-- program %s\n", info.dli_fname);
-//    printf("-- fbase %p\n", info.dli_fbase);
-//    printf("-- saddr %p\n", info.dli_saddr);
     
-    //NSString *filePath = [NSString stringWithFormat:@"%s", info.dli_fname];
+    //    printf("-- function %s\n", info.dli_sname);
+    //    printf("-- program %s\n", info.dli_fname);
+    //    printf("-- fbase %p\n", info.dli_fbase);
+    //    printf("-- saddr %p\n", info.dli_saddr);
+    
+    NSString *filePath = [NSString stringWithFormat:@"%s", info.dli_fname];
     
 #if TARGET_OS_IPHONE && !TARGET_IPHONE_SIMULATOR
     NSString *symbolName = @""; // info.dli_sname is unreliable on the device, most of time "<redacted>"
@@ -99,15 +117,49 @@
     NSString *symbolName = [NSString stringWithFormat:@"%s", info.dli_sname];
 #endif
     
-    NSString *categoryName = nil;
-    
-    NSUInteger startIndex = [symbolName rangeOfString:@"("].location;
-    NSUInteger stopIndex = [symbolName rangeOfString:@")"].location;
-    if(startIndex != NSNotFound && stopIndex != NSNotFound && startIndex < stopIndex) {
-        categoryName = [symbolName substringWithRange:NSMakeRange(startIndex+1, (stopIndex - startIndex)-1)];
+    NSString *categoryName = [symbolName subStringFromChar:'(' toChar:')'];
+
+    NSMutableDictionary *md = [NSMutableDictionary dictionaryWithCapacity:2];
+    if (filePath)
+    {
+        md[@"filePath"] = filePath;
     }
-    
-    _categoryName = categoryName;
+    if (symbolName)
+    {
+        md[@"symbolName"] = symbolName;
+    }
+    if (categoryName)
+    {
+        md[@"categoryName"] = categoryName;
+    }
+    return md;
+}
+
+- (NSString *)categoryName
+{
+    if(_cachedDyldInfoDictionary == nil)
+    {
+        self.cachedDyldInfoDictionary = [self dyldInfo];
+    }
+    return _cachedDyldInfoDictionary[@"categoryName"];
+}
+
+- (NSString *)symbolName
+{
+    if(_cachedDyldInfoDictionary == nil)
+    {
+        self.cachedDyldInfoDictionary = [self dyldInfo];
+    }
+    return _cachedDyldInfoDictionary[@"symbolName"];
+}
+
+- (NSString *)filePath
+{
+    if(_cachedDyldInfoDictionary == nil)
+    {
+        self.cachedDyldInfoDictionary = [self dyldInfo];
+    }
+    return _cachedDyldInfoDictionary[@"filePath"];
 }
 
 @end

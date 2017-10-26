@@ -55,6 +55,8 @@
         _name = [NSString stringWithUTF8String:name];
     }
 
+    NSLog(@"%@", _name);
+    
     unsigned int count;
     Protocol * __unsafe_unretained *protocols = protocol_copyProtocolList(self.protocol, &count);
     

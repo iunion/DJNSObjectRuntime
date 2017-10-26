@@ -43,6 +43,8 @@
     if (name)
     {
         _name = [NSString stringWithUTF8String:name];
+        
+        NSLog(@"ivarName: %@", _name);
     }
     _offset = ivar_getOffset(self.ivar);
     const char *typeEncoding = ivar_getTypeEncoding(self.ivar);

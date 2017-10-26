@@ -153,12 +153,12 @@
 
 - (NSString *)subStringFromChar:(char)charStart toChar:(char)charEnd
 {
-    NSUInteger startIndex = 0, endIndex = 0;
+    NSInteger startIndex = -1, endIndex = 0;
     NSUInteger length = 0;
     
     for (NSUInteger i = 0; i < [self length]; i++)
     {
-        if ([self characterAtIndex:i] == charStart && startIndex == 0)
+        if ([self characterAtIndex:i] == charStart && startIndex == -1)
         {
             startIndex = i+1;
             i += 1;
@@ -171,7 +171,7 @@
         }
     }
     
-    if (endIndex != 0)
+    if (endIndex != 0 && startIndex != -1)
     {
         length = endIndex - startIndex;
     }

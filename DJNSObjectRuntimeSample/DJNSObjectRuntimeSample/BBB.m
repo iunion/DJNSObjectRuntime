@@ -10,6 +10,11 @@
 
 @implementation BBB
 
++ (NSString *)classMethod
+{
+    return @"a";
+}
+
 - (NSString *)bbbbbbbbb {
     return @"b";
 }

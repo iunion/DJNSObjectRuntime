@@ -20,6 +20,9 @@
 		5A23A5961F749F8D006B94C6 /* DJObjectProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A23A5951F749F8D006B94C6 /* DJObjectProtocol.m */; };
 		5A23A59D1F74B71D006B94C6 /* AAA.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A23A59A1F74B71D006B94C6 /* AAA.m */; };
 		5A23A59E1F74B71D006B94C6 /* BBB.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A23A59C1F74B71D006B94C6 /* BBB.m */; };
+		5A23A5A71F78A170006B94C6 /* NSDictionary+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A23A5A61F78A170006B94C6 /* NSDictionary+Category.m */; };
+		5A2E5AD01FA03BB500C2A32A /* DJObjectDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2E5ACF1FA03BB500C2A32A /* DJObjectDescription.m */; };
+		5A2E5AD31FA174F700C2A32A /* DJObjectUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2E5AD21FA174F700C2A32A /* DJObjectUtility.m */; };
 		5AC23C011F6B6B2D0087BB58 /* DJClassInfor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC23BF51F6B6B2D0087BB58 /* DJClassInfor.m */; };
 		5AC23C021F6B6B2D0087BB58 /* DJObjectIvar.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC23BF81F6B6B2D0087BB58 /* DJObjectIvar.m */; };
 		5AC23C031F6B6B2D0087BB58 /* DJObjectManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC23BFA1F6B6B2D0087BB58 /* DJObjectManager.m */; };
@@ -73,6 +76,12 @@
 		5A23A59A1F74B71D006B94C6 /* AAA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AAA.m; sourceTree = "<group>"; };
 		5A23A59B1F74B71D006B94C6 /* BBB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBB.h; sourceTree = "<group>"; };
 		5A23A59C1F74B71D006B94C6 /* BBB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBB.m; sourceTree = "<group>"; };
+		5A23A5A51F78A170006B94C6 /* NSDictionary+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Category.h"; sourceTree = "<group>"; };
+		5A23A5A61F78A170006B94C6 /* NSDictionary+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Category.m"; sourceTree = "<group>"; };
+		5A2E5ACE1FA03BB500C2A32A /* DJObjectDescription.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DJObjectDescription.h; sourceTree = "<group>"; };
+		5A2E5ACF1FA03BB500C2A32A /* DJObjectDescription.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DJObjectDescription.m; sourceTree = "<group>"; };
+		5A2E5AD11FA174F700C2A32A /* DJObjectUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DJObjectUtility.h; sourceTree = "<group>"; };
+		5A2E5AD21FA174F700C2A32A /* DJObjectUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DJObjectUtility.m; sourceTree = "<group>"; };
 		5AC23BF41F6B6B2D0087BB58 /* DJClassInfor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJClassInfor.h; sourceTree = "<group>"; };
 		5AC23BF51F6B6B2D0087BB58 /* DJClassInfor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJClassInfor.m; sourceTree = "<group>"; };
 		5AC23BF61F6B6B2D0087BB58 /* DJObjectDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJObjectDefine.h; sourceTree = "<group>"; };
@@ -185,20 +194,26 @@
 				5AC23BF41F6B6B2D0087BB58 /* DJClassInfor.h */,
 				5AC23BF51F6B6B2D0087BB58 /* DJClassInfor.m */,
 				5AC23BF61F6B6B2D0087BB58 /* DJObjectDefine.h */,
-				5AC23BF71F6B6B2D0087BB58 /* DJObjectIvar.h */,
-				5AC23BF81F6B6B2D0087BB58 /* DJObjectIvar.m */,
 				5AC23BF91F6B6B2D0087BB58 /* DJObjectManager.h */,
 				5AC23BFA1F6B6B2D0087BB58 /* DJObjectManager.m */,
-				5AC23BFB1F6B6B2D0087BB58 /* DJObjectMethod.h */,
-				5AC23BFC1F6B6B2D0087BB58 /* DJObjectMethod.m */,
 				5AC23BFD1F6B6B2D0087BB58 /* DJObjectProperty.h */,
 				5AC23BFE1F6B6B2D0087BB58 /* DJObjectProperty.m */,
+				5AC23BF71F6B6B2D0087BB58 /* DJObjectIvar.h */,
+				5AC23BF81F6B6B2D0087BB58 /* DJObjectIvar.m */,
+				5AC23BFB1F6B6B2D0087BB58 /* DJObjectMethod.h */,
+				5AC23BFC1F6B6B2D0087BB58 /* DJObjectMethod.m */,
 				5A23A5941F749F8D006B94C6 /* DJObjectProtocol.h */,
 				5A23A5951F749F8D006B94C6 /* DJObjectProtocol.m */,
+				5A2E5AD11FA174F700C2A32A /* DJObjectUtility.h */,
+				5A2E5AD21FA174F700C2A32A /* DJObjectUtility.m */,
+				5A2E5ACE1FA03BB500C2A32A /* DJObjectDescription.h */,
+				5A2E5ACF1FA03BB500C2A32A /* DJObjectDescription.m */,
 				5AC23BFF1F6B6B2D0087BB58 /* NSObject+DJRuntime.h */,
 				5AC23C001F6B6B2D0087BB58 /* NSObject+DJRuntime.m */,
 				5A23A58B1F735E9A006B94C6 /* NSArray+Category.h */,
 				5A23A58C1F735E9A006B94C6 /* NSArray+Category.m */,
+				5A23A5A51F78A170006B94C6 /* NSDictionary+Category.h */,
+				5A23A5A61F78A170006B94C6 /* NSDictionary+Category.m */,
 				5A23A58E1F735FBB006B94C6 /* NSObject+Category.h */,
 				5A23A58F1F735FBB006B94C6 /* NSObject+Category.m */,
 				5A23A5911F736037006B94C6 /* NSString+Category.h */,
@@ -340,8 +355,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				5A0408C11F6785B7009F2989 /* ViewController.m in Sources */,
+				5A2E5AD31FA174F700C2A32A /* DJObjectUtility.m in Sources */,
 				5A23A5901F735FBB006B94C6 /* NSObject+Category.m in Sources */,
+				5A23A5A71F78A170006B94C6 /* NSDictionary+Category.m in Sources */,
 				5A0408971F67857E009F2989 /* AppDelegate.m in Sources */,
+				5A2E5AD01FA03BB500C2A32A /* DJObjectDescription.m in Sources */,
 				5A0408941F67857E009F2989 /* main.m in Sources */,
 				5AC23C041F6B6B2D0087BB58 /* DJObjectMethod.m in Sources */,
 				5A23A58D1F735E9A006B94C6 /* NSArray+Category.m in Sources */,
