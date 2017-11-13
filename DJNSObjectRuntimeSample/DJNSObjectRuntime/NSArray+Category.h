@@ -121,10 +121,3 @@
 
 @end
 
-
-@interface NSArray (MQ)
-
-- (nullable NSArray *)makeTagsWithMaxCount:(NSUInteger)count maxLength:(NSUInteger)maxLength;
-
-@end
-

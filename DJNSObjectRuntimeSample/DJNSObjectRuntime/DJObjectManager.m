@@ -8,6 +8,7 @@
 
 #import "DJObjectManager.h"
 #import <CoreData/CoreData.h>
+#import "NSObject+DJRuntimeUtility.h"
 #import "NSObject+Category.h"
 
 #include "dlfcn.h"

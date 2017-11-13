@@ -13,7 +13,7 @@
 		5A04089C1F67857E009F2989 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A04089A1F67857E009F2989 /* LaunchScreen.storyboard */; };
 		5A0408A71F67857E009F2989 /* DJNSObjectRuntimeSampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A0408A61F67857E009F2989 /* DJNSObjectRuntimeSampleTests.m */; };
 		5A0408B21F67857E009F2989 /* DJNSObjectRuntimeSampleUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A0408B11F67857E009F2989 /* DJNSObjectRuntimeSampleUITests.m */; };
-		5A0408C11F6785B7009F2989 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A0408C01F6785B7009F2989 /* ViewController.m */; };
+		5A0408C11F6785B7009F2989 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A0408C01F6785B7009F2989 /* ViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		5A23A58D1F735E9A006B94C6 /* NSArray+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A23A58C1F735E9A006B94C6 /* NSArray+Category.m */; };
 		5A23A5901F735FBB006B94C6 /* NSObject+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A23A58F1F735FBB006B94C6 /* NSObject+Category.m */; };
 		5A23A5931F736037006B94C6 /* NSString+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A23A5921F736037006B94C6 /* NSString+Category.m */; };
@@ -29,6 +29,8 @@
 		5AC23C041F6B6B2D0087BB58 /* DJObjectMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC23BFC1F6B6B2D0087BB58 /* DJObjectMethod.m */; };
 		5AC23C051F6B6B2D0087BB58 /* DJObjectProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC23BFE1F6B6B2D0087BB58 /* DJObjectProperty.m */; };
 		5AC23C061F6B6B2D0087BB58 /* NSObject+DJRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC23C001F6B6B2D0087BB58 /* NSObject+DJRuntime.m */; };
+		5AF3C5BF1FB3F4C300767984 /* NSObject+DJRuntimeUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AF3C5BE1FB3F4C300767984 /* NSObject+DJRuntimeUtility.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		5AF3C5C21FB44A6C00767984 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AF3C5C01FB44A6B00767984 /* Person.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +97,10 @@
 		5AC23BFE1F6B6B2D0087BB58 /* DJObjectProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJObjectProperty.m; sourceTree = "<group>"; };
 		5AC23BFF1F6B6B2D0087BB58 /* NSObject+DJRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+DJRuntime.h"; sourceTree = "<group>"; };
 		5AC23C001F6B6B2D0087BB58 /* NSObject+DJRuntime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+DJRuntime.m"; sourceTree = "<group>"; };
+		5AF3C5BD1FB3F4C300767984 /* NSObject+DJRuntimeUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+DJRuntimeUtility.h"; sourceTree = "<group>"; };
+		5AF3C5BE1FB3F4C300767984 /* NSObject+DJRuntimeUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+DJRuntimeUtility.m"; sourceTree = "<group>"; };
+		5AF3C5C01FB44A6B00767984 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
+		5AF3C5C11FB44A6B00767984 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +156,8 @@
 				5A0408961F67857E009F2989 /* AppDelegate.m */,
 				5A0408BF1F6785B7009F2989 /* ViewController.h */,
 				5A0408C01F6785B7009F2989 /* ViewController.m */,
+				5AF3C5C11FB44A6B00767984 /* Person.h */,
+				5AF3C5C01FB44A6B00767984 /* Person.m */,
 				5A23A5991F74B71D006B94C6 /* AAA.h */,
 				5A23A59A1F74B71D006B94C6 /* AAA.m */,
 				5A23A59B1F74B71D006B94C6 /* BBB.h */,
@@ -210,6 +218,8 @@
 				5A2E5ACF1FA03BB500C2A32A /* DJObjectDescription.m */,
 				5AC23BFF1F6B6B2D0087BB58 /* NSObject+DJRuntime.h */,
 				5AC23C001F6B6B2D0087BB58 /* NSObject+DJRuntime.m */,
+				5AF3C5BD1FB3F4C300767984 /* NSObject+DJRuntimeUtility.h */,
+				5AF3C5BE1FB3F4C300767984 /* NSObject+DJRuntimeUtility.m */,
 				5A23A58B1F735E9A006B94C6 /* NSArray+Category.h */,
 				5A23A58C1F735E9A006B94C6 /* NSArray+Category.m */,
 				5A23A5A51F78A170006B94C6 /* NSDictionary+Category.h */,
@@ -356,7 +366,9 @@
 			files = (
 				5A0408C11F6785B7009F2989 /* ViewController.m in Sources */,
 				5A2E5AD31FA174F700C2A32A /* DJObjectUtility.m in Sources */,
+				5AF3C5C21FB44A6C00767984 /* Person.m in Sources */,
 				5A23A5901F735FBB006B94C6 /* NSObject+Category.m in Sources */,
+				5AF3C5BF1FB3F4C300767984 /* NSObject+DJRuntimeUtility.m in Sources */,
 				5A23A5A71F78A170006B94C6 /* NSDictionary+Category.m in Sources */,
 				5A0408971F67857E009F2989 /* AppDelegate.m in Sources */,
 				5A2E5AD01FA03BB500C2A32A /* DJObjectDescription.m in Sources */,

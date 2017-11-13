@@ -15,9 +15,6 @@
 - (BOOL)isNotEmpty;
 - (BOOL)isNotEmptyDictionary;
 
-+ (nonnull NSString *)className;
-- (nonnull NSString *)className;
-
 @end
 
 @interface NSObject (Boolean)

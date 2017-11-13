@@ -16,17 +16,6 @@
 
 @implementation NSObject (Category)
 
-+ (NSString *)className
-{
-    return NSStringFromClass(self);
-}
-
-- (NSString *)className
-{
-    return [NSString stringWithUTF8String:class_getName([self class])];
-}
-
-
 - (BOOL)isValided
 {
     return !(self == nil || [self isKindOfClass:[NSNull class]]);
