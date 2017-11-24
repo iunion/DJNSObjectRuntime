@@ -8,6 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+#import "DJObjectDefine.h"
+
+#import "DJObjectProperty.h"
+#import "DJObjectIvar.h"
+#import "DJObjectMethod.h"
+#import "DJObjectProtocol.h"
+
 @interface DJObjectUtility : NSObject
+
 
 @end

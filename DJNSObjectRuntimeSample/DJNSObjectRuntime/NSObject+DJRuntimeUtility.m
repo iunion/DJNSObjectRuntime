@@ -131,7 +131,7 @@
 {
     // 获取对象实例变量
     Ivar ivar = object_getInstanceVariable(self, name, outValue);
-    ivar_getName(ivar);
+    //ivar_getName(ivar);
     return ivar;
 }
 
@@ -162,4 +162,38 @@
     object_setIvar(self, ivar, value);
 }
 
+/*
+- (BOOL)tryAddPropertyWithPropertyName:(NSString *)propertyname attributes:(NSDictionary *)attributePairs
+{
+    return [self tryAddPropertyWithName:[propertyname cStringUsingEncoding:NSUTF8StringEncoding] attributes:attributePairs];
+}
+
+- (BOOL)tryAddPropertyWithName:(const char *)name attributes:(NSDictionary *)attributePairs
+{
+    BOOL added = NO;
+    objc_property_t property = class_getProperty([self class], name);
+    if (!property)
+    {
+        unsigned int totalAttributesCount = (unsigned int)[attributePairs count];
+        objc_property_attribute_t *attributes = malloc(sizeof(objc_property_attribute_t) * totalAttributesCount);
+        if (attributes)
+        {
+            unsigned int attributeIndex = 0;
+            for (NSString *attributeName in [attributePairs allKeys])
+            {
+                objc_property_attribute_t attribute;
+                attribute.name = [attributeName UTF8String];
+                attribute.value = [attributePairs[attributeName] UTF8String];
+                attributes[attributeIndex++] = attribute;
+            }
+            
+            added = class_addProperty([self class], name, attributes, totalAttributesCount);
+            free(attributes);
+        }
+    }
+    
+    return added;
+}
+*/
+ 
 @end

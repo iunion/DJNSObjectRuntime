@@ -8,40 +8,43 @@
 
 #import <Foundation/Foundation.h>
 #import "DJObjectDefine.h"
-
-// See https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtPropertyIntrospection.html#//apple_ref/doc/uid/TP40008048-CH101-SW6
-extern const char kNSObjectRuntimeAttributeTypeEncoding;
-extern const char kNSObjectRuntimeAttributeBackingIvar;
-extern const char kNSObjectRuntimeAttributeReadOnly;
-extern const char kNSObjectRuntimeAttributeCopy;
-extern const char kNSObjectRuntimeAttributeRetain;
-extern const char kNSObjectRuntimeAttributeNonAtomic;
-extern const char kNSObjectRuntimeAttributeCustomGetter;
-extern const char kNSObjectRuntimeAttributeCustomSetter;
-extern const char kNSObjectRuntimeAttributeDynamic;
-extern const char kNSObjectRuntimeAttributeWeak;
-extern const char kNSObjectRuntimeAttributeGarbageCollectable;
-extern const char kNSObjectRuntimeAttributeOldStyleTypeEncoding;
-
+#import "DJObjectType.h"
 
 @interface DJObjectProperty : NSObject
 
+// property
 @property (nullable, nonatomic, assign) objc_property_t property;
-@property (nonnull, nonatomic, strong, readonly) NSString *name;            ///< property's name
-@property (nonatomic, assign, readonly) DJEncodingType type;                ///< property's type
-@property (nonnull, nonatomic, strong, readonly) NSString *typeEncoding;    ///< property's encoding value
-@property (nonnull, nonatomic, strong, readonly) NSString *ivarName;        ///< property's ivar name
-@property (nullable, nonatomic, assign, readonly) Class cls;                ///< may be nil
-@property (nullable, nonatomic, strong, readonly) NSArray<NSString *> *protocols; ///< may nil
-@property (nonatomic, assign, readonly) BOOL isReadonly;                    ///< readonly
-@property (nonnull, nonatomic, assign, readonly) SEL getter;                ///< getter (nonnull)
-@property (nonnull, nonatomic, assign, readonly) SEL setter;                ///< setter (nonnull)
-@property (nonnull, nonatomic, strong, readonly) NSString *getterName;      ///< getterName (nonnull)
-@property (nonnull, nonatomic, strong, readonly) NSString *setterName;      ///< setterName (nonnull)
+// property's name
+@property (nonnull, nonatomic, strong, readonly) NSString *name;
+// property's type
+@property (nonatomic, assign, readonly) DJEncodingType fullType;
+// property's type
+@property (nullable, nonatomic, strong, readonly) DJObjectType *type;
+// property's ivar name
+@property (nonnull, nonatomic, strong, readonly) NSString *ivarName;
+// readonly
+@property (nonatomic, assign, readonly) BOOL isReadonly;
+// getter (nonnull)
+@property (nonnull, nonatomic, assign, readonly) SEL getter;
+// setter (nonnull)
+@property (nonnull, nonatomic, assign, readonly) SEL setter;
+// getterName (nonnull)
+@property (nonnull, nonatomic, strong, readonly) NSString *getterName;
+// setterName (nonnull)
+@property (nonnull, nonatomic, strong, readonly) NSString *setterName;
 
-@property (nullable, nonatomic, strong, readonly) NSString *objectClassName; ///< objectClass Name (nullable)
-@property (nullable, nonatomic, strong, readonly) NSString *structureName;   ///< structure Name (nullable)
-@property (nullable, nonatomic, strong, readonly) NSString *unionName;       ///< union Name (nullable)
+// property's encoding value
+@property (nonnull, nonatomic, strong, readonly) NSString *typeEncoding;
+// protocol array may nil
+@property (nullable, nonatomic, strong, readonly) NSArray<NSString *> *protocols;
+// Class may be nil
+@property (nullable, nonatomic, assign, readonly) Class cls;
+// objectClass Name (nullable)
+@property (nullable, nonatomic, strong, readonly) NSString *objectClassName;
+// structure Name (nullable)
+@property (nullable, nonatomic, strong, readonly) NSString *structureName;
+// union Name (nullable)
+@property (nullable, nonatomic, strong, readonly) NSString *unionName;
 
 - (nullable instancetype)initWithProperty:(nullable objc_property_t)property;
 

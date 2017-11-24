@@ -50,6 +50,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable Ivar)setInstanceVariableWithName:(const char *)name value:(nullable void *)value;
 - (void)setIvarValue:(Ivar)ivar value:(nullable void *)value;
 
+//- (BOOL)tryAddPropertyWithPropertyName:(NSString *)propertyname attributes:(NSDictionary *)attributePairs;
+//- (BOOL)tryAddPropertyWithName:(const char *)name attributes:(NSDictionary *)attributePairs;
+
 @end
 
 NS_ASSUME_NONNULL_END

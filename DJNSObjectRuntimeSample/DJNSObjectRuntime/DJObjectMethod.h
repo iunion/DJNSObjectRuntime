@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "DJObjectDefine.h"
+#import "DJObjectType.h"
 
 @interface DJObjectMethod : NSObject
 
@@ -27,6 +28,13 @@
 @property (nullable, nonatomic, strong, readonly) NSString *returnTypeEncoding;
 // array of arguments' type string
 @property (nullable, nonatomic, strong, readonly) NSArray<NSString *> *argumentTypeEncodings;
+
+// method's returntype
+@property (nonatomic, assign, readonly) DJEncodingType fullReturnType;
+// method's returntype
+@property (nullable, nonatomic, strong, readonly) DJObjectType *returnType;
+// array of arguments' type
+@property (nullable, nonatomic, strong, readonly) NSArray<DJObjectType *> *argumentTypes;
 
 - (nullable instancetype)initWithMethod:(nullable Method)method;
 

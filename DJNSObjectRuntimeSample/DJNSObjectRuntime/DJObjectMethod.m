@@ -13,6 +13,23 @@
 // Arguments 0 and 1 are self and _cmd always
 const unsigned int kDJNumberOfImplicitArgs = 2;
 
+// See Table 6-2 https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html
+// const
+const char kNSObjectRuntimeMethodTypeQualifierConst = 'r';
+// in
+const char kNSObjectRuntimeMethodTypeQualifierIn = 'n';
+// inout
+const char kNSObjectRuntimeMethodTypeQualifierInOut = 'N';
+// out
+const char kNSObjectRuntimeMethodTypeQualifierOut = 'o';
+// bycopy
+const char kNSObjectRuntimeMethodTypeQualifierBycopy = 'O';
+// byref
+const char kNSObjectRuntimeMethodTypeQualifierByref = 'R';
+// oneway
+const char kNSObjectRuntimeMethodTypeQualifierOneway = 'V';
+
+
 @interface DJObjectMethod ()
 
 @property (nonatomic, strong) NSDictionary *cachedDyldInfoDictionary;
@@ -72,24 +89,34 @@ const unsigned int kDJNumberOfImplicitArgs = 2;
     if (returnType)
     {
         _returnTypeEncoding = [NSString stringWithUTF8String:returnType];
+        _returnType = [[DJObjectType alloc] initWithTypeEncoding:returnType];
         free(returnType);
     }
     
     unsigned int argumentCount = method_getNumberOfArguments(self.method);
     if (argumentCount > 0)
     {
+        NSMutableArray *argumentTypeEncodings = [NSMutableArray array];
         NSMutableArray *argumentTypes = [NSMutableArray array];
         for (unsigned int i = kDJNumberOfImplicitArgs; i < argumentCount; i++)
         {
             char *argumentType = method_copyArgumentType(self.method, i);
             NSString *type = argumentType ? [NSString stringWithUTF8String:argumentType] : nil;
-            [argumentTypes addObject:type ? type : @""];
+            [argumentTypeEncodings addObject:type ? type : @""];
             if (argumentType)
             {
+                DJObjectType *type = [[DJObjectType alloc] initWithTypeEncoding:argumentType];
+                [argumentTypes addObject:type];
                 free(argumentType);
             }
+            else
+            {
+                DJObjectType *type = [[DJObjectType alloc] init];
+                [argumentTypes addObject:type];
+            }
         }
-        _argumentTypeEncodings = argumentTypes;
+        _argumentTypeEncodings = argumentTypeEncodings;
+        _argumentTypes = argumentTypes;
     }
 }
 

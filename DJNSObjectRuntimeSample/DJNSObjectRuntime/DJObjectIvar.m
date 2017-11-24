@@ -50,9 +50,44 @@
     const char *typeEncoding = ivar_getTypeEncoding(self.ivar);
     if (typeEncoding)
     {
-        _typeEncoding = [NSString stringWithUTF8String:typeEncoding];
-        _type = [DJObjectManager encodingTypeWith:typeEncoding];
+        //NSLog(@"typeEncoding: %@, name: %@", _typeEncoding, _name);
+        _type = [[DJObjectType alloc] initWithTypeEncoding:typeEncoding];
     }
+}
+
+- (NSArray<NSString *> *)protocols
+{
+    return self.type.protocols;
+}
+
+- (NSString *)typeEncoding
+{
+    return self.type.typeEncoding;
+}
+
+- (Class)cls
+{
+    if (self.objectClassName)
+    {
+        return objc_getClass(self.objectClassName.UTF8String);
+    }
+    
+    return nil;
+}
+
+- (NSString *)objectClassName
+{
+    return self.type.objectClassName;
+}
+
+- (NSString *)structureName
+{
+    return self.type.structureName;
+}
+
+- (NSString *)unionName
+{
+    return self.type.unionName;
 }
 
 @end

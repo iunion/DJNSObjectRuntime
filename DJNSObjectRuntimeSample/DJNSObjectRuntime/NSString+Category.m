@@ -153,18 +153,37 @@
 
 - (NSString *)subStringFromChar:(char)charStart toChar:(char)charEnd
 {
+    NSScanner *scanner = [NSScanner scannerWithString:self];
+    if (![scanner scanString:[NSString stringWithFormat:@"%c", charStart] intoString:NULL])
+    {
+        return nil;
+    }
+    NSString *subString = nil;
+    if ([scanner scanUpToString:[NSString stringWithFormat:@"%c", charEnd] intoString:&subString])
+    {
+        if (subString.length)
+        {
+            return subString;
+        }
+    }
+    
+    return nil;
+}
+
+/*
+- (NSString *)subStringFromChar:(char)charStart toChar:(char)charEnd
+{
     NSInteger startIndex = -1, endIndex = 0;
-    NSUInteger length = 0;
+    NSInteger length = 0;
     
     for (NSUInteger i = 0; i < [self length]; i++)
     {
-        if ([self characterAtIndex:i] == charStart && startIndex == -1)
+        if (startIndex == -1 && [self characterAtIndex:i] == charStart)
         {
             startIndex = i+1;
-            i += 1;
             continue;
         }
-        if ([self characterAtIndex:i] == charEnd)
+        else if ([self characterAtIndex:i] == charEnd)
         {
             endIndex = i;
             break;
@@ -175,7 +194,7 @@
     {
         length = endIndex - startIndex;
     }
-    if (length != 0)
+    if (length > 0)
     {
         NSRange rang = NSMakeRange(startIndex, length);
         
@@ -184,7 +203,7 @@
     
     return nil;
 }
-
+*/
 @end
 
 

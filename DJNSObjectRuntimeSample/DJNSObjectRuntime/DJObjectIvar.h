@@ -8,14 +8,31 @@
 
 #import <Foundation/Foundation.h>
 #import "DJObjectDefine.h"
+#import "DJObjectType.h"
 
 @interface DJObjectIvar : NSObject
 
-@property (nullable, nonatomic, assign) Ivar ivar;                ///< ivar opaque struct
-@property (nullable, nonatomic, strong, readonly) NSString *name;           ///< Ivar's name
-@property (nonatomic, assign, readonly) ptrdiff_t offset;                   ///< Ivar's offset
-@property (nonatomic, assign, readonly) DJEncodingType type;                ///< Ivar's type
-@property (nullable, nonatomic, strong, readonly) NSString *typeEncoding;   ///< Ivar's type encoding
+// ivar opaque struct
+@property (nullable, nonatomic, assign) Ivar ivar;
+// Ivar's name
+@property (nullable, nonatomic, strong, readonly) NSString *name;
+// Ivar's offset
+@property (nonatomic, assign, readonly) ptrdiff_t offset;
+// Ivar's type
+@property (nullable, nonatomic, strong, readonly) DJObjectType *type;
+
+// Ivar's type encoding
+@property (nullable, nonatomic, strong, readonly) NSString *typeEncoding;
+// protocol array may nil
+@property (nullable, nonatomic, strong, readonly) NSArray<NSString *> *protocols;
+// Class may be nil
+@property (nullable, nonatomic, assign, readonly) Class cls;
+// objectClass Name (nullable)
+@property (nullable, nonatomic, strong, readonly) NSString *objectClassName;
+// structure Name (nullable)
+@property (nullable, nonatomic, strong, readonly) NSString *structureName;
+// union Name (nullable)
+@property (nullable, nonatomic, strong, readonly) NSString *unionName;
 
 - (nullable instancetype)initWithIvar:(nullable Ivar)ivar;
 

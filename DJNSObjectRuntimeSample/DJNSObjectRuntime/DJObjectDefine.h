@@ -11,10 +11,31 @@
 
 #import <objc/runtime.h>
 
+// See https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtPropertyIntrospection.html#//apple_ref/doc/uid/TP40008048-CH101-SW6
+extern const char kNSObjectRuntimeAttributeTypeEncoding;
+extern const char kNSObjectRuntimeAttributeBackingIvar;
+extern const char kNSObjectRuntimeAttributeReadOnly;
+extern const char kNSObjectRuntimeAttributeCopy;
+extern const char kNSObjectRuntimeAttributeRetain;
+extern const char kNSObjectRuntimeAttributeNonAtomic;
+extern const char kNSObjectRuntimeAttributeCustomGetter;
+extern const char kNSObjectRuntimeAttributeCustomSetter;
+extern const char kNSObjectRuntimeAttributeDynamic;
+extern const char kNSObjectRuntimeAttributeWeak;
+extern const char kNSObjectRuntimeAttributeGarbageCollectable;
+extern const char kNSObjectRuntimeAttributeOldStyleTypeEncoding;
+
+extern const unsigned int kDJNumberOfImplicitArgs;
+
+// See https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html
+#define DJEncodeClass(class) ("@\"" #class "\"")
+
+#define DJNSStringRuntimeAttribute(attribute) [NSString stringWithFormat:@"%c", attribute]
+
 typedef NS_OPTIONS(NSUInteger, DJEncodingType)
 {
-    DJEncodingTypeMask       = 0xFF,    ///< mask of type value
-    DJEncodingTypeUnknown    = 0,       ///< unknown
+    DJEncodingTypeMask              = 0xFF,    ///< mask of type value
+    DJEncodingTypeUnknown           = 0,       ///< unknown
     DJEncodingTypeVoid       = 1,       ///< void
     DJEncodingTypeBool       = 2,       ///< bool
     DJEncodingTypeInt8       = 3,       ///< char / BOOL
